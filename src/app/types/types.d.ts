@@ -12,3 +12,7 @@ type SocialMediaLink = {
 type SocialMediaLinksProps = {
   socialmediaLinks: SocialMediaLink[];
 };
+
+type HeroBannerProps = {
+  image: string;
+};
