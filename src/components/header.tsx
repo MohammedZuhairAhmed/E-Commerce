@@ -1,9 +1,9 @@
-"use client";
-import Image from "next/image";
-//import SocialMediaLinks from "./SocialMediaButton";
-import Link from "next/link";
-import styles from "./header.module.css";
-import { useState } from "react";
+'use client';
+import Image from 'next/image';
+import SocialMediaLinks from './SocialMediaButton';
+import Link from 'next/link';
+import styles from './header.module.css';
+import { useState } from 'react';
 
 export default function Header({ params }: { params: HeaderProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,14 +22,14 @@ export default function Header({ params }: { params: HeaderProps }) {
       <div
         className="container-fluid"
         style={{
-          maxWidth: "100%",
-          paddingLeft: "50px",
-          paddingRight: "50px",
-          boxShadow: "1px 1px 1px #DCDCDC",
-          position: "fixed",
-          backgroundColor: "#fff",
-          zIndex: "9999",
-          top: "0",
+          maxWidth: '100%',
+          paddingLeft: '50px',
+          paddingRight: '50px',
+          boxShadow: '1px 1px 1px #DCDCDC',
+          position: 'fixed',
+          backgroundColor: '#fff',
+          zIndex: '9999',
+          top: '0',
         }}
       >
         {/* Website logo*/}
@@ -40,8 +40,8 @@ export default function Header({ params }: { params: HeaderProps }) {
             width={100}
             height={100}
             style={{
-              marginLeft: "30px",
-              objectFit: "contain",
+              marginLeft: '30px',
+              objectFit: 'contain',
             }}
           />
         </Link>
@@ -49,12 +49,12 @@ export default function Header({ params }: { params: HeaderProps }) {
         {/* For responsiveness of website and hamburger*/}
         <div className="btn-mobile">
           <button
-            className={`navbar-toggler ${menuOpen ? "" : "collapsed"} px-0`}
+            className={`navbar-toggler ${menuOpen ? '' : 'collapsed'} px-0`}
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#cs-nav-content"
             aria-controls="cs-nav-content"
-            aria-expanded={menuOpen ? "true" : "false"}
+            aria-expanded={menuOpen ? 'true' : 'false'}
             aria-label="Toggle navigation"
             onClick={toggleMenu}
           >
@@ -74,15 +74,13 @@ export default function Header({ params }: { params: HeaderProps }) {
 
         {/* Navbar tabs */}
         <div
-          className={`navbar-collapse justify-content-between  ${
-            menuOpen ? "show" : ""
-          } collapse ${styles.navigationLinks} ${styles.techxHeaderMobile}`}
+          className={`navbar-collapse justify-content-between  ${menuOpen ? 'show' : ''} collapse ${styles.navigationLinks} ${styles.techxHeaderMobile}`}
           id="cs-nav-content"
         >
-          <ul className="navbar-nav" style={{ gap: "35px" }}>
-            {params.navigationLinks.map((a: any) => (
+          <ul className="navbar-nav" style={{ gap: '35px' }}>
+            {params.navigationLinks.map((a) => (
               <li
-                style={{ marginRight: "70px" }}
+                style={{ marginRight: '70px' }}
                 key={a.title}
                 className="nav-item dropdown"
               >
@@ -90,12 +88,12 @@ export default function Header({ params }: { params: HeaderProps }) {
                   className="super-bold"
                   href={a.href}
                   style={{
-                    fontSize: "1.4rem",
+                    fontSize: '1.4rem',
                     fontWeight: 600,
-                    letterSpacing: "0.8px",
-                    textDecoration: "none",
-                    cursor: "pointer",
-                    padding: "1.5rem",
+                    letterSpacing: '0.8px',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    padding: '1.5rem',
                   }}
                   onClick={closeMenu}
                 >
@@ -103,9 +101,9 @@ export default function Header({ params }: { params: HeaderProps }) {
                 </Link>
               </li>
             ))}
-            <li style={{ marginRight: "70px" }} className="nav-item dropdown">
+            <li style={{ marginRight: '70px' }} className="nav-item dropdown">
               <div className={`btn-ctas`}>
-                {/* <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} /> */}
+                <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} />
               </div>
             </li>
           </ul>
@@ -115,7 +113,7 @@ export default function Header({ params }: { params: HeaderProps }) {
           </div> */}
         </div>
         <div id="login-mobile" className="d-none ">
-          {/* <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} /> */}
+          <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} />
         </div>
       </div>
     </nav>
