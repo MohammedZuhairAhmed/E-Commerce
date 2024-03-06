@@ -1,0 +1,39 @@
+.navigationLinks {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 43%;
+}
+
+@media (max-width: 768px) {
+  .navigationLinks {
+    flex-direction: column;
+    align-items: center;
+    padding-left: 0;
+    padding-bottom: 5%;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 1039px) {
+  .techxHeaderMobile {
+    position: absolute;
+    top: 60px;
+    background: #ffffff;
+    right: 0;
+    padding: 0;
+    /* margin-right:10px; */
+    padding-top: 15px;
+    border-radius: 3px;
+    box-shadow: 0 5px 10px 0 rgb(78, 75, 75);
+  }
+}
+@media (max-width: 1350px) and (min-width: 1040px) {
+  .navigationLinks {
+    position: fixed;
+    right: 20px;
+    padding-left: 35%;
+  }
+}
