@@ -6,7 +6,7 @@ import Loading from './loading';
 import Header from '@/components/header';
 import data from './data.json';
 import { singleEntryWithUID } from '@/contentstack-sdk/fetch';
-
+import { getHeaderRes } from '@/data';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,28 +19,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let dataLoaded = false;
+  let headerData: HeaderProps;
 
   try {
-    await singleEntryWithUID('header_field_1', 'blt100cbdf1c35eca05').then((res) => {
-      console.log(res.navbar[0])
-    });
+    headerData = (await getHeaderRes()) as HeaderProps;
+    dataLoaded = true;
   } catch (err) {
     console.error(err);
   }
 
-  let headerProps: HeaderProps;
-  headerProps = {
-    logo: data.data.entry.logo.url,
-    navigationLinks: [],
-    socialmediaLinks: [],
-  };
-
-  headerProps.navigationLinks.push(...data.data.entry.navbar.link);
-  headerProps.socialmediaLinks.push(...data.data.entry.social_media.link);
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header params={headerProps} />
+        {dataLoaded && headerData! && <Header params={headerData} />}
         <Suspense fallback={<Loading />}>{children}</Suspense>
         <link
           rel="stylesheet"

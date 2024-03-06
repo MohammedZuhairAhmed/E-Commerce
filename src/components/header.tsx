@@ -1,13 +1,14 @@
 'use client';
 import Image from 'next/image';
-import SocialMediaLinks from './SocialMediaButton';
 import Link from 'next/link';
 import styles from './header.module.css';
 import { useState } from 'react';
+import { MdOutlineLogin } from 'react-icons/md';
+import { FaUserPlus } from 'react-icons/fa6';
+import { GiShoppingCart } from 'react-icons/gi';
 
 export default function Header({ params }: { params: HeaderProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
-
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -35,12 +36,11 @@ export default function Header({ params }: { params: HeaderProps }) {
         {/* Website logo*/}
         <Link className="navbar-brand" href="/">
           <Image
-            src={params.logo}
+            src={String(params.logo.url)}
             alt="Contentstack"
             width={100}
-            height={100}
+            height={50}
             style={{
-              marginLeft: '30px',
               objectFit: 'contain',
             }}
           />
@@ -77,13 +77,9 @@ export default function Header({ params }: { params: HeaderProps }) {
           className={`navbar-collapse justify-content-between  ${menuOpen ? 'show' : ''} collapse ${styles.navigationLinks} ${styles.techxHeaderMobile}`}
           id="cs-nav-content"
         >
-          <ul className="navbar-nav" style={{ gap: '35px' }}>
-            {params.navigationLinks.map((a) => (
-              <li
-                style={{ marginRight: '70px' }}
-                key={a.title}
-                className="nav-item dropdown"
-              >
+          <ul className="navbar-nav">
+            {params.navbar.map((a: Link) => (
+              <li key={a.title} className="nav-item dropdown">
                 <Link
                   className="super-bold"
                   href={a.href}
@@ -93,7 +89,8 @@ export default function Header({ params }: { params: HeaderProps }) {
                     letterSpacing: '0.8px',
                     textDecoration: 'none',
                     cursor: 'pointer',
-                    padding: '1.5rem',
+                    paddingLeft: '1.5rem',
+                    paddingRight: '1.5rem',
                   }}
                   onClick={closeMenu}
                 >
@@ -101,19 +98,34 @@ export default function Header({ params }: { params: HeaderProps }) {
                 </Link>
               </li>
             ))}
-            <li style={{ marginRight: '70px' }} className="nav-item dropdown">
-              <div className={`btn-ctas`}>
-                <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} />
-              </div>
-            </li>
           </ul>
-
-          {/* <div className={`btn-ctas`}>
-            <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} />
-          </div> */}
-        </div>
-        <div id="login-mobile" className="d-none ">
-          <SocialMediaLinks socialmediaLinks={params.socialmediaLinks} />
+          <button className="btn btn-outline-primary">
+            <span
+              className="cs-icon icon-size-auto"
+              style={{ paddingRight: '5px', paddingBottom: '2px' }}
+            >
+              <FaUserPlus />
+            </span>
+            Register
+          </button>
+          <button className="btn btn-primary">
+            <span
+              className="cs-icon icon-size-auto"
+              style={{ paddingRight: '5px', paddingBottom: '2px' }}
+            >
+              <MdOutlineLogin />
+            </span>
+            Login
+          </button>
+          <button className="btn btn-outline-primary">
+            <span
+              className="cs-icon icon-size-auto"
+              style={{ paddingRight: '5px', paddingBottom: '2px' }}
+            >
+              <GiShoppingCart />
+            </span>
+            Cart
+          </button>
         </div>
       </div>
     </nav>
