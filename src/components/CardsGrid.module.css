@@ -1,0 +1,44 @@
+.purple {
+  color: #7c4dff;
+  cursor: pointer;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  padding: 0 5% 2%;
+}
+
+.Heading {
+  text-align: center;
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 5%;
+}
+
+.HeadingText {
+  text-align: center;
+  font-size: 2.4rem;
+}
+
+.linkText {
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 768px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0 5% 4%;
+  }
+}

@@ -86,7 +86,8 @@ const data = [
     redirectionLink: 'product',
   },
 ];
-export default function Home() {
+
+export default function Products() {
   return (
     <main>
       <CardsGrid
