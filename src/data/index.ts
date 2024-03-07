@@ -7,12 +7,20 @@ export const getHeaderRes = async () => {
     jsonRtePath: undefined,
   })) as HeaderProps[][];
 
-  const { logo: { url: logoUrl } = {}, navbar: navbarData = [] as any[] } =
-    res[0][0];
+  const {
+    logo: { url: logoUrl } = {},
+    navbar: navbarData = [] as any[],
+    button: buttonData = [] as any[],
+  } = res[0][0];
 
   const navigationLinks = navbarData.map((navItem: { link?: Link }) => ({
     title: navItem.link?.title,
     href: navItem.link?.href,
+  }));
+
+  const buttonLinks = buttonData.map((buttonItem: Button) => ({
+    title: buttonItem.title,
+    href: buttonItem.href,
   }));
 
   return {
@@ -20,5 +28,6 @@ export const getHeaderRes = async () => {
       url: logoUrl,
     },
     navbar: navigationLinks,
+    button: buttonLinks,
   };
 };

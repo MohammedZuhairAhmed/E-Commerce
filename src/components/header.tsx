@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './header.module.css';
 import { useState } from 'react';
-import { MdOutlineLogin } from 'react-icons/md';
 import { FaUserPlus } from 'react-icons/fa6';
+import { MdOutlineLogin } from 'react-icons/md';
 import { GiShoppingCart } from 'react-icons/gi';
 
 export default function Header({ params }: { params: HeaderProps }) {
@@ -16,6 +16,64 @@ export default function Header({ params }: { params: HeaderProps }) {
   const closeMenu = () => {
     setMenuOpen(false);
   };
+
+  const navLinks = params.navbar.map((a: Link) => (
+    <li key={a.title} className="nav-item dropdown">
+      <Link
+        className="super-bold"
+        href={a.href}
+        style={{
+          fontSize: '1.4rem',
+          fontWeight: 600,
+          letterSpacing: '0.8px',
+          textDecoration: 'none',
+          cursor: 'pointer',
+          paddingLeft: '1.5rem',
+          paddingRight: '1.5rem',
+        }}
+        onClick={closeMenu}
+      >
+        {a.title}
+      </Link>
+    </li>
+  ));
+
+  const buttonLinks = params.button.map((buttonItem, index) => {
+    const icon = () => {
+      switch (buttonItem.title) {
+        case 'Register':
+          return <FaUserPlus />;
+        case 'Login':
+          return <MdOutlineLogin />;
+        case 'Cart':
+          return <GiShoppingCart />;
+        default:
+          return null;
+      }
+    };
+
+    const buttonClass =
+      index % 2 === 0 ? 'btn btn-outline-primary' : 'btn btn-primary';
+
+    return (
+      <Link
+        key={buttonItem.title}
+        className="super-bold"
+        href={buttonItem.href}
+        onClick={closeMenu}
+      >
+        <button className={buttonClass}>
+          <span
+            className="cs-icon icon-size-auto"
+            style={{ paddingRight: '5px', paddingBottom: '2px' }}
+          >
+            {icon()}
+          </span>
+          {buttonItem.title}
+        </button>
+      </Link>
+    );
+  });
 
   return (
     <nav id="cs-main-nav" className="navbar navbar-expand-cs">
@@ -77,55 +135,8 @@ export default function Header({ params }: { params: HeaderProps }) {
           className={`navbar-collapse justify-content-between  ${menuOpen ? 'show' : ''} collapse ${styles.navigationLinks} ${styles.techxHeaderMobile}`}
           id="cs-nav-content"
         >
-          <ul className="navbar-nav">
-            {params.navbar.map((a: Link) => (
-              <li key={a.title} className="nav-item dropdown">
-                <Link
-                  className="super-bold"
-                  href={a.href}
-                  style={{
-                    fontSize: '1.4rem',
-                    fontWeight: 600,
-                    letterSpacing: '0.8px',
-                    textDecoration: 'none',
-                    cursor: 'pointer',
-                    paddingLeft: '1.5rem',
-                    paddingRight: '1.5rem',
-                  }}
-                  onClick={closeMenu}
-                >
-                  {a.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <button className="btn btn-outline-primary">
-            <span
-              className="cs-icon icon-size-auto"
-              style={{ paddingRight: '5px', paddingBottom: '2px' }}
-            >
-              <FaUserPlus />
-            </span>
-            Register
-          </button>
-          <button className="btn btn-primary">
-            <span
-              className="cs-icon icon-size-auto"
-              style={{ paddingRight: '5px', paddingBottom: '2px' }}
-            >
-              <MdOutlineLogin />
-            </span>
-            Login
-          </button>
-          <button className="btn btn-outline-primary">
-            <span
-              className="cs-icon icon-size-auto"
-              style={{ paddingRight: '5px', paddingBottom: '2px' }}
-            >
-              <GiShoppingCart />
-            </span>
-            Cart
-          </button>
+          <ul className="navbar-nav">{navLinks}</ul>
+          {buttonLinks}
         </div>
       </div>
     </nav>

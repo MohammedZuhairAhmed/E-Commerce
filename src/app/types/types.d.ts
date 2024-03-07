@@ -1,6 +1,12 @@
 type HeaderProps = {
   logo: Image;
   navbar: Link[];
+  button: Button[];
+};
+
+type Button = {
+  title: string;
+  href: string;
 };
 
 type Link = {
