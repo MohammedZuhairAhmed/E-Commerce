@@ -4,8 +4,6 @@ import './globals.css';
 import { Suspense } from 'react';
 import Loading from './loading';
 import Header from '@/components/header';
-import data from './data.json';
-import { singleEntryWithUID } from '@/contentstack-sdk/fetch';
 import { getHeaderRes } from '@/data';
 const inter = Inter({ subsets: ['latin'] });
 

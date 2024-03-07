@@ -7,6 +7,7 @@ type Link = {
   title?: string;
   href?: url;
 };
+
 type Image = {
   filename?: string;
   url?: string;

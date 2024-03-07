@@ -1,4 +1,3 @@
-import { singleEntryWithUID } from '@/contentstack-sdk/fetch';
 import { getEntry } from '@/contentstack-sdk';
 
 export const getHeaderRes = async () => {
