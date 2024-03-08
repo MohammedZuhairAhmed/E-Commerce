@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import styles from './header.module.css';
+import styles from './Header.module.css';
 import { useState } from 'react';
 import { FaUserPlus } from 'react-icons/fa6';
 import { MdOutlineLogin } from 'react-icons/md';
