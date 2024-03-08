@@ -4,7 +4,7 @@ import './globals.css';
 import { Suspense } from 'react';
 import Loading from './loading';
 import Header from '@/components/Header';
-import { getHeaderRes } from '@/data';
+import { getHeaderRes } from '@/helper';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

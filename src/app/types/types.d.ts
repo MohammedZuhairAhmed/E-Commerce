@@ -52,6 +52,7 @@ type List = {
   page_reference: [PageRef];
   href?: string;
 };
+
 type PageRef = {
   title: string;
   url: string;
