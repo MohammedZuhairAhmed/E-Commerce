@@ -27,16 +27,14 @@ export default function Card({
                 <p className="card-text body-4 p-2">{tags}</p>
               </div>
             )}
-            {image && (
-              <div className="card-img-top">
-                <Image
-                  src={String(image)}
-                  alt="img"
-                  className="card-img-top"
-                  width={400}
-                  height={400}
-                />
-              </div>
+            {typeof image === 'object' && image.url && (
+              <Image
+                src={image.url}
+                alt="img"
+                className="card-img-top"
+                width={400}
+                height={400}
+              />
             )}
           </div>
           <div className={`card-body ${styles.cardBody}`}>

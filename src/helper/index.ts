@@ -1,4 +1,4 @@
-import { getEntry } from '@/contentstack-sdk';
+import { getEntry, getEntryByUrl } from '@/contentstack-sdk';
 
 export const getHeaderRes = async () => {
   const res = (await getEntry({
@@ -6,7 +6,7 @@ export const getHeaderRes = async () => {
     referenceFieldPath: ['navbar.reference'],
     jsonRtePath: undefined,
   })) as HeaderProps[][];
-
+  //console.log(res);
   const {
     logo: { url: logoUrl } = {},
     navbar: navbarData = [] as any[],
@@ -29,5 +29,35 @@ export const getHeaderRes = async () => {
     },
     navbar: navigationLinks,
     button: buttonLinks,
+  };
+};
+
+interface EntryResponse {
+  sections?: Array<{
+    home_products?: {
+      reference?: Array<{ uid: string; _content_type_uid: string }>;
+    };
+  }>;
+}
+
+export const getHomeRes = async (entryUrl: string) => {
+  const res = (await getEntryByUrl({
+    contentTypeUid: 'reffered_page_1',
+    entryUrl,
+    referenceFieldPath: ['sections.home_products.reference'],
+    jsonRtePath: undefined,
+  })) as {
+    sections: Array<{
+      home_products?: { reference: Array<any> };
+    }>;
+  }[];
+
+  const { sections: sectionData = [] as any[] } = res[0];
+  const products = sectionData.map((section) => {
+    return section.home_products?.reference;
+  });
+
+  return {
+    products: products[0],
   };
 };

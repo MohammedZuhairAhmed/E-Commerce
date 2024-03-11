@@ -4,6 +4,10 @@ type HeaderProps = {
   button: Button[];
 };
 
+type HomeProps = {
+  products: ProductProps[];
+};
+
 type Button = {
   title: string;
   href: string;
@@ -29,6 +33,13 @@ type ProductProps = {
   tags: string;
 };
 
+type CardsGridProps = {
+  params: ProductProps[];
+  title: string;
+  viewAllText: string;
+  redirectionLink: string;
+};
+
 type CardProps = {
   uid: ProductProps['uid'] | string;
   title: ProductProps['title'] | string;
@@ -37,13 +48,6 @@ type CardProps = {
   price: ProductProps['price'] | string;
   image: ProductProps['image'] | string;
   tags: ProductProps['tags'] | string;
-  redirectionLink: string;
-};
-
-type CardsGridProps = {
-  params: CardProps[];
-  title: string;
-  viewAllText: string;
   redirectionLink: string;
 };
 
