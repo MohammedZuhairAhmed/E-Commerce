@@ -28,13 +28,9 @@ export default function Card({
               </div>
             )}
             {typeof image === 'object' && image.url && (
-              <Image
-                src={image.url}
-                alt="img"
-                className="card-img-top"
-                width={400}
-                height={400}
-              />
+              <div className="card-img-top" style={{ textAlign: 'center' }}>
+                <Image src={image.url} alt="img" width={300} height={300} />
+              </div>
             )}
           </div>
           <div className={`card-body ${styles.cardBody}`}>

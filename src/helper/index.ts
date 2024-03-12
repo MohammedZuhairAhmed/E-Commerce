@@ -6,7 +6,7 @@ export const getHeaderRes = async () => {
     referenceFieldPath: ['navbar.reference'],
     jsonRtePath: undefined,
   })) as HeaderProps[][];
-  //console.log(res);
+
   const {
     logo: { url: logoUrl } = {},
     navbar: navbarData = [] as any[],
@@ -31,14 +31,6 @@ export const getHeaderRes = async () => {
     button: buttonLinks,
   };
 };
-
-interface EntryResponse {
-  sections?: Array<{
-    home_products?: {
-      reference?: Array<{ uid: string; _content_type_uid: string }>;
-    };
-  }>;
-}
 
 export const getHomeRes = async (entryUrl: string) => {
   const res = (await getEntryByUrl({
