@@ -13,6 +13,12 @@
   padding: 0 5% 2%;
 }
 
+.filterButton {
+  justify-content: center;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
 .Heading {
   text-align: center;
   font-size: 5rem;

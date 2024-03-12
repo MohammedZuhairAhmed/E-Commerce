@@ -36,8 +36,9 @@ type ProductProps = {
 type CardsGridProps = {
   params: ProductProps[];
   title: string;
-  viewAllText: string;
+  viewAllText?: string;
   redirectionLink: string;
+  override?: boolean;
 };
 
 type CardProps = {

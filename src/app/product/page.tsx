@@ -18,7 +18,7 @@ export default async function Products() {
         <CardsGrid
           params={homeData.products}
           title="Products"
-          viewAllText="View All Products"
+          override
           redirectionLink="product"
         />
       )}
