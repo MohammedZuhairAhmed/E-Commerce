@@ -1,5 +1,12 @@
 import { getEntry, getEntryByUrl } from '@/contentstack-sdk';
 
+type HomeResponse = {
+  sections: Array<{
+    home_banner?: { banner: Array<Image> };
+    home_products?: { reference: Array<any> };
+  }>;
+};
+
 export const getHeaderRes = async () => {
   const res = (await getEntry({
     contentTypeUid: 'header_field_1',
@@ -38,18 +45,22 @@ export const getHomeRes = async (entryUrl: string) => {
     entryUrl,
     referenceFieldPath: ['sections.home_products.reference'],
     jsonRtePath: undefined,
-  })) as {
-    sections: Array<{
-      home_products?: { reference: Array<any> };
-    }>;
-  }[];
+  })) as HomeResponse[];
 
   const { sections: sectionData = [] as any[] } = res[0];
-  const products = sectionData.map((section) => {
-    return section.home_products?.reference;
-  });
+
+  const banners = sectionData.flatMap((section) =>
+    section.home_banner?.banner !== undefined ? section.home_banner.banner : [],
+  );
+
+  const products = sectionData.flatMap((section) =>
+    section.home_products?.reference !== undefined
+      ? section.home_products?.reference
+      : [],
+  );
 
   return {
-    products: products[0],
+    banners,
+    products,
   };
 };

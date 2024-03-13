@@ -5,6 +5,7 @@ type HeaderProps = {
 };
 
 type HomeProps = {
+  banners: Image[];
   products: ProductProps[];
 };
 
