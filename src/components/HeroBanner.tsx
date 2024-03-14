@@ -20,6 +20,7 @@ export default function HeroBanner({
           src={url}
           alt=""
           className="img-fluid"
+          layout="responsive"
           width={1510}
           height={500}
         />
