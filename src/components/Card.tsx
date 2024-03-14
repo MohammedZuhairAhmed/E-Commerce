@@ -29,7 +29,13 @@ export default function Card({
             )}
             {typeof image === 'object' && image.url && (
               <div className="card-img-top" style={{ textAlign: 'center' }}>
-                <Image src={image.url} alt="img" width={300} height={300} />
+                <Image
+                  src={image.url}
+                  alt="img"
+                  width={300}
+                  height={300}
+                  layout="responsive"
+                />
               </div>
             )}
           </div>

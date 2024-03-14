@@ -14,7 +14,9 @@ export default async function Home() {
   }
   return (
     <main>
-      <HeroBanner />
+      {dataLoaded && homeData?.banners && (
+        <HeroBanner params={homeData.banners} />
+      )}
       {dataLoaded && homeData?.products && (
         <CardsGrid
           params={homeData.products}
