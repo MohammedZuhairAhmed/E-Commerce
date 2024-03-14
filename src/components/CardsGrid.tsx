@@ -21,8 +21,16 @@ export default function CardsGrid({
   const cardsToShow = showAll ? params : params.slice(0, 3);
   const showViewAll = params.length > 3;
 
-  const uniqueTags = new Set();
-  cardsToShow.forEach((prod) => uniqueTags.add(prod.tags[0]));
+  const filterMap = new Map<string, ProductProps[]>();
+
+  cardsToShow.forEach((product) => {
+    const tag = product.tags[0];
+    const products = filterMap.get(tag) || [];
+    products.push(product);
+    filterMap.set(tag, products);
+  });
+
+  const tags = Array.from(filterMap.keys());
 
   const handleAllClick = () => {
     setActiveTag('all');
@@ -32,24 +40,20 @@ export default function CardsGrid({
     setActiveTag(tag);
   };
 
-  const filterButtons = Array.from(uniqueTags).map((tag) => {
+  const filterButtons = tags.map((tag) => {
     return (
       <button
-        key={tag as string}
+        key={tag}
         className={`btn ${styles.filterButton} ${tag === activeTag ? 'btn-primary' : 'btn-outline-primary'}`}
-        onClick={() => handleTagClick(tag as string)}
+        onClick={() => handleTagClick(tag)}
       >
-        {tag as string}
+        {tag}
       </button>
     );
   });
 
-  const filterProducts = (products: ProductProps[], activeTag: string) => {
-    if (activeTag === 'all') {
-      return products;
-    } else {
-      return products.filter((product) => product.tags[0] === activeTag);
-    }
+  const filterProducts = (activeTag: string) => {
+    return filterMap.get(activeTag);
   };
 
   return (
@@ -71,9 +75,15 @@ export default function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {filterProducts(cardsToShow, activeTag).map((card: any, index: any) => (
-          <Card key={index} {...card} redirectionLink={redirectionLink} />
-        ))}
+        {activeTag === 'all'
+          ? cardsToShow.map((card: any, index: any) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))
+          : filterProducts(activeTag)?.map(
+              (card: ProductProps, index: number) => (
+                <Card key={index} {...card} redirectionLink={redirectionLink} />
+              ),
+            )}
       </div>
       <div
         onClick={handleClick}
