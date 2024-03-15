@@ -1,4 +1,8 @@
-import { getEntry, getEntryByUrl } from '@/contentstack-sdk';
+import {
+  getEntry,
+  getEntryByUrl,
+  singleEntryQueryWithUID,
+} from '@/contentstack-sdk';
 
 type HomeResponse = {
   sections: Array<{
@@ -63,4 +67,12 @@ export const getHomeRes = async (entryUrl: string) => {
     banners,
     products,
   };
+};
+
+export const getProductByID = async (uid: string) => {
+  const query = singleEntryQueryWithUID('products', uid);
+
+  const result = (await query.toJSON().fetch()) as ProductProps;
+
+  return result;
 };

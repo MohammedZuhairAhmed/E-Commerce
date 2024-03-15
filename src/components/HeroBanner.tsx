@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import styles from './HeroBanner.module.css';
 
 export default function HeroBanner({
   params,
@@ -14,13 +15,13 @@ export default function HeroBanner({
     return (
       <div
         key={index}
-        className={`carousel-item ${index == 0 ? 'active' : ''}`}
+        className={`carousel-item container-fluid d-flex pb-0 pe-0 ps-0 ${index == 0 ? 'active' : ''}`}
       >
         <Image
           src={url}
           alt=""
-          className="img-fluid"
-          layout="responsive"
+          className={`${styles.heroBannerImage} img-fluid`}
+          sizes="100vw"
           width={1510}
           height={500}
         />
