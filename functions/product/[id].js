@@ -1,3 +1,3 @@
 export default function handler(request, response) {
-  response.end(`Hello ${request.query.name}!`);
+  response.end(`Hello ${request.query.id}!`);
 }
