@@ -86,7 +86,12 @@ export const getProductRes = async () => {
     headers: {
       'Content-Type': 'application/json',
     },
+    cache: 'no-store',
   });
+  // const check = JSON.stringify(result);
+  // check[0].map((prod) => {
+
+  // })
   const data = await res.json();
   console.log(data);
 };
