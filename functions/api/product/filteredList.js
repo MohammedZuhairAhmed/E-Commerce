@@ -1,10 +1,16 @@
 export default async function handler(req, res) {
-  const productData = req.body[0];
-  const productTitles = productData.map((product) => product.title);
+  if (req.body) {
+    const productData = req.body[0];
 
-  const response = {
-    productTitles,
-  };
+    // Extract titles using map
+    const productTitles = productData.map((product) => product.title);
 
-  res.status(200).json(response);
+    const response = {
+      productTitles,
+    };
+
+    res.status(200).json(response);
+  } else {
+    res.status(400).json({ error: 'Empty request body' });
+  }
 }
