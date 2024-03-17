@@ -1,3 +1,4 @@
+require('dotenv').config();
 export default async function handler(req, res) {
   const envVars = {
     hasContentstackCdn: !!process.env.CONTENTSTACK_CDN,
