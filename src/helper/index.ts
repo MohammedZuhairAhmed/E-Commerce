@@ -1,3 +1,9 @@
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const envConfig = process.env.CONTENTSTACK_API_KEY
+  ? process.env
+  : publicRuntimeConfig;
+const { BASE_URL } = envConfig;
 import {
   getEntry,
   getEntryByUrl,
@@ -75,7 +81,7 @@ export const getProductRes = async () => {
 
   const result = await query.includeCount().toJSON().find();
 
-  const res = await fetch(`${process.env.BASE_URL}/api/product/filteredList`, {
+  const res = await fetch(`${BASE_URL}/api/product/filteredList`, {
     body: result,
   });
 
