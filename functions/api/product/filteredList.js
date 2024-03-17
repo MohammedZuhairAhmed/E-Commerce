@@ -11,6 +11,6 @@ export default async function handler(req, res) {
     environment,
   };
 
-  response.send(`Hello ${base_url}`);
+  res.send(`Hello ${base_url}`);
   //res.status(200).json(data);
 }
