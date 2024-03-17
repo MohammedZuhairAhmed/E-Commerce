@@ -82,6 +82,7 @@ export const getProductRes = async () => {
   const result = await query.includeCount().toJSON().find();
 
   const res = await fetch(`${process.env.BASE_URL}/api/product/filteredList`, {
+    method: 'POST',
     body: result,
   });
 
