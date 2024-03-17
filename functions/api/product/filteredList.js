@@ -1,9 +1,8 @@
 export default async function handler(req, res) {
   if (req.body) {
-    const productDataString = req.body;
-    const productData = JSON.parse(productDataString);
+    const productData = req.body[0];
 
-    const productTitles = productData[0].map((product) => product.title);
+    const productTitles = productData.map((product) => product.title);
 
     const response = {
       productTitles,
