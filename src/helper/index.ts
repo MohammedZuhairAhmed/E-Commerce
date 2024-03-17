@@ -2,6 +2,7 @@ import {
   getEntry,
   getEntryByUrl,
   singleEntryQueryWithUID,
+  allEntriesQuery,
 } from '@/contentstack-sdk';
 
 type HomeResponse = {
@@ -67,6 +68,18 @@ export const getHomeRes = async (entryUrl: string) => {
     banners,
     products,
   };
+};
+
+export const getProductRes = async () => {
+  const query = allEntriesQuery('products');
+
+  const result = await query.includeCount().toJSON().find();
+
+  const res = await fetch(`${process.env.BASE_URL}/api/product/filteredList`, {
+    body: result,
+  });
+
+  console.log(res);
 };
 
 export const getProductByID = async (uid: string) => {

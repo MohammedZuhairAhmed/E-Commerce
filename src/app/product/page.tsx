@@ -1,12 +1,14 @@
-import { getHomeRes } from '@/helper';
+import { getHomeRes, getProductRes } from '@/helper';
 import CardsGrid from '@/components/CardsGrid';
 
 export default async function Products() {
   let homeData;
   let dataLoaded = false;
+  let productData;
 
   try {
     homeData = (await getHomeRes('/')) as HomeProps;
+    productData = await getProductRes();
     dataLoaded = true;
   } catch (err) {
     console.error(err);
