@@ -1,3 +1,4 @@
 export default async function handler(req, res) {
-  res.status(200).json(req.body);
+  const products = req.body[0];
+  res.status(200).json(products);
 }

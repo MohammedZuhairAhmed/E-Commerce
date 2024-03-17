@@ -79,14 +79,16 @@ export const getHomeRes = async (entryUrl: string) => {
 export const getProductRes = async () => {
   const query = allEntriesQuery('products');
 
-  const result = await query.includeCount().toJSON().find();
-
+  const result = await query.toJSON().find();
   const res = await fetch(`${process.env.BASE_URL}/api/product/filteredList`, {
     method: 'POST',
-    body: result,
+    body: JSON.stringify(result),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
-
-  console.log(res);
+  const data = await res.json();
+  console.log(data);
 };
 
 export const getProductByID = async (uid: string) => {
