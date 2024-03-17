@@ -1,9 +1,9 @@
-import getConfig from 'next/config';
-const { publicRuntimeConfig } = getConfig();
-const envConfig = process.env.CONTENTSTACK_API_KEY
-  ? process.env
-  : publicRuntimeConfig;
-const { BASE_URL } = envConfig;
+// import getConfig from 'next/config';
+// const { publicRuntimeConfig } = getConfig();
+// const envConfig = process.env.CONTENTSTACK_API_KEY
+//   ? process.env
+//   : publicRuntimeConfig;
+// const { BASE_URL } = envConfig;
 import {
   getEntry,
   getEntryByUrl,
@@ -81,9 +81,12 @@ export const getProductRes = async () => {
 
   const result = await query.includeCount().toJSON().find();
 
-  const res = await fetch(`${BASE_URL}/api/product/filteredList`, {
-    body: result,
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HOSTED_URL}/api/product/filteredList`,
+    {
+      body: result,
+    },
+  );
 
   console.log(res);
 };
