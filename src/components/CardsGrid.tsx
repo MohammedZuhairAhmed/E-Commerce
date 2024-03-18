@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card from './Card';
 import styles from './CardsGrid.module.css';
 
@@ -38,7 +38,6 @@ export default function CardsGrid({
 
   const handleTagClick = (tag: string) => {
     setActiveTag(tag);
-    filterProducts(tag);
   };
 
   const filterButtons = tags?.map((tag) => {
@@ -52,7 +51,9 @@ export default function CardsGrid({
       </button>
     );
   });
-
+  useEffect(() => {
+    filterProducts('electronics');
+  }, []);
   const filterProducts = async (activeTag: string) => {
     const res = await fetch(
       `${process.env.BASE_URL}/api/product/${activeTag}`,
@@ -65,7 +66,7 @@ export default function CardsGrid({
         cache: 'no-store',
       },
     );
-
+    console.log(JSON.stringify(products));
     const data = await res.json();
     console.log(data);
     // return filterMap.get(activeTag);

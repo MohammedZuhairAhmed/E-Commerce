@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   try {
     if (req.body) {
       const productData = req.body;
-      const categoryToFind = req.query.category;
+      const categoryToFind = decodeURIComponent(req.query.category);
 
       const productIndexes = productData.reduce((acc, product, index) => {
         if (product.tags[0] === categoryToFind) {
