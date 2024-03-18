@@ -2,10 +2,11 @@ export default async function handler(req, res) {
   if (req.body) {
     const productData = req.body[0];
 
-    const productTitles = productData.map((product) => product.title);
+    const productTags = productData.map((product) => product.tags[0]);
 
     const response = {
-      productTitles,
+      productTags,
+      productData,
     };
 
     res.status(200).json(response);

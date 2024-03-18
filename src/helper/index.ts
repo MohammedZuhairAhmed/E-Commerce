@@ -1,9 +1,3 @@
-// import getConfig from 'next/config';
-// const { publicRuntimeConfig } = getConfig();
-// const envConfig = process.env.CONTENTSTACK_API_KEY
-//   ? process.env
-//   : publicRuntimeConfig;
-// const { BASE_URL } = envConfig;
 import {
   getEntry,
   getEntryByUrl,
@@ -88,10 +82,7 @@ export const getProductRes = async () => {
     },
     cache: 'no-store',
   });
-  // const check = JSON.stringify(result);
-  // check[0].map((prod) => {
 
-  // })
   const data = await res.json();
   console.log(data);
 };
