@@ -2,7 +2,9 @@ export default async function handler(req, res) {
   if (req.body) {
     const productData = req.body[0];
 
-    const productTags = productData.map((product) => product.tags[0]);
+    const productTags = [
+      ...new Set(productData.map((product) => product.tags[0])),
+    ];
 
     const response = {
       productTags,
