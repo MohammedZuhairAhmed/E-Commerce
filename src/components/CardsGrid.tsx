@@ -13,13 +13,15 @@ export default function CardsGrid({
 }: CardsGridProps) {
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
+  const products = params.productData;
+  const tags = params.productTags;
 
   const handleClick = () => {
     setShowAll(!showAll);
   };
 
-  const cardsToShow = showAll ? params : params.slice(0, 3);
-  const showViewAll = params.length > 3;
+  const cardsToShow = showAll ? products : products.slice(0, 3);
+  const showViewAll = products.length > 3;
 
   const filterMap = new Map<string, ProductProps[]>();
 
@@ -30,17 +32,16 @@ export default function CardsGrid({
     filterMap.set(tag, products);
   });
 
-  const tags = Array.from(filterMap.keys());
-
   const handleAllClick = () => {
     setActiveTag('all');
   };
 
   const handleTagClick = (tag: string) => {
     setActiveTag(tag);
+    filterProducts(tag);
   };
 
-  const filterButtons = tags.map((tag) => {
+  const filterButtons = tags?.map((tag) => {
     return (
       <button
         key={tag}
@@ -52,8 +53,22 @@ export default function CardsGrid({
     );
   });
 
-  const filterProducts = (activeTag: string) => {
-    return filterMap.get(activeTag);
+  const filterProducts = async (activeTag: string) => {
+    const res = await fetch(
+      `${process.env.BASE_URL}/api/product/${activeTag}`,
+      {
+        method: 'POST',
+        body: JSON.stringify(products),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+      },
+    );
+
+    const data = await res.json();
+    console.log(data);
+    // return filterMap.get(activeTag);
   };
 
   return (
@@ -75,7 +90,7 @@ export default function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {activeTag === 'all'
+        {/* {activeTag === 'all'
           ? cardsToShow.map((card: any, index: any) => (
               <Card key={index} {...card} redirectionLink={redirectionLink} />
             ))
@@ -83,7 +98,11 @@ export default function CardsGrid({
               (card: ProductProps, index: number) => (
                 <Card key={index} {...card} redirectionLink={redirectionLink} />
               ),
-            )}
+            )} */}
+        {activeTag === 'all' &&
+          cardsToShow.map((card: any, index: any) => (
+            <Card key={index} {...card} redirectionLink={redirectionLink} />
+          ))}
       </div>
       <div
         onClick={handleClick}

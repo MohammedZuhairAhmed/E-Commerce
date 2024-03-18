@@ -66,7 +66,9 @@ export const getHomeRes = async (entryUrl: string) => {
 
   return {
     banners,
-    products,
+    products: {
+      productData: products,
+    },
   };
 };
 
@@ -83,8 +85,11 @@ export const getProductRes = async () => {
     cache: 'no-store',
   });
 
-  const data = await res.json();
-  console.log(data);
+  const data = (await res.json()) as ProductResProps;
+  return {
+    productTags: data.productTags,
+    productData: data.productData,
+  };
 };
 
 export const getProductByID = async (uid: string) => {
