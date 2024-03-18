@@ -72,6 +72,7 @@ export default function CardsGrid({
 
   useEffect(() => {
     filterProducts(activeTag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTag]);
 
   return (
@@ -93,9 +94,13 @@ export default function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {filteredProducts.map((card: ProductProps, index: number) => (
-          <Card key={index} {...card} redirectionLink={redirectionLink} />
-        ))}
+        {override
+          ? filteredProducts.map((card: ProductProps, index: number) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))
+          : cardsToShow.map((card: any, index: any) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))}
       </div>
       <div
         onClick={handleClick}
