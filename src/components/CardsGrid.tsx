@@ -47,21 +47,21 @@ export default function CardsGrid({
   });
 
   const filterProducts = async (activeTag: string) => {
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${activeTag}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      body: JSON.stringify(products),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      cache: 'no-store',
-    });
-
-    const data = await res.json();
-    console.log(data);
     if (activeTag === 'all') {
       setFilteredProducts(cardsToShow);
     } else {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${activeTag}`;
+      const res = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(products),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+      });
+
+      const data = await res.json();
+
       const filteredProductIndexes = data.productIndexes;
       const filteredProducts = cardsToShow.filter((product, index) =>
         filteredProductIndexes.includes(index),
@@ -93,19 +93,6 @@ export default function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {/* {activeTag === 'all'
-          ? cardsToShow.map((card: any, index: any) => (
-              <Card key={index} {...card} redirectionLink={redirectionLink} />
-            ))
-          : filterProducts(activeTag)?.map(
-              (card: ProductProps, index: number) => (
-                <Card key={index} {...card} redirectionLink={redirectionLink} />
-              ),
-            )}
-        {activeTag === 'all' &&
-          cardsToShow.map((card: any, index: any) => (
-            <Card key={index} {...card} redirectionLink={redirectionLink} />
-          ))} */}
         {filteredProducts.map((card: ProductProps, index: number) => (
           <Card key={index} {...card} redirectionLink={redirectionLink} />
         ))}

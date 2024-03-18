@@ -87,7 +87,6 @@ export const getProductRes = async () => {
       cache: 'no-store',
     },
   );
-  // console.log(JSON.stringify(result));
   const data = (await res.json()) as ProductResProps;
   return {
     productTags: data.productTags,

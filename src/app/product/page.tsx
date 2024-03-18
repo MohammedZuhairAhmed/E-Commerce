@@ -2,7 +2,6 @@ import { getHomeRes, getProductRes } from '@/helper';
 import CardsGrid from '@/components/CardsGrid';
 
 export default async function Products() {
-  let homeData;
   let dataLoaded = false;
   let data;
 
