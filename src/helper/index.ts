@@ -76,15 +76,18 @@ export const getProductRes = async () => {
   const query = allEntriesQuery('products');
 
   const result = await query.includeCount().toJSON().find();
-  const res = await fetch(`${process.env.BASE_URL}/api/product/filteredList`, {
-    method: 'POST',
-    body: JSON.stringify(result),
-    headers: {
-      'Content-Type': 'application/json',
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/filteredList`,
+    {
+      method: 'POST',
+      body: JSON.stringify(result),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      cache: 'no-store',
     },
-    cache: 'no-store',
-  });
-
+  );
+  // console.log(JSON.stringify(result));
   const data = (await res.json()) as ProductResProps;
   return {
     productTags: data.productTags,

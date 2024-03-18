@@ -15,8 +15,7 @@ export default function CardsGrid({
   const tags = params.productTags;
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
-  const [filteredProducts, setFilteredProducts] =
-    useState<ProductProps[]>(products);
+  const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
 
   const handleClick = () => {
     setShowAll(!showAll);
@@ -48,19 +47,18 @@ export default function CardsGrid({
   });
 
   const filterProducts = async (activeTag: string) => {
-    const res = await fetch(
-      `${process.env.BASE_URL}/api/product/${activeTag}`,
-      {
-        method: 'POST',
-        body: JSON.stringify(products),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${activeTag}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(products),
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
-    const data = await res.json();
+      cache: 'no-store',
+    });
 
+    const data = await res.json();
+    console.log(data);
     if (activeTag === 'all') {
       setFilteredProducts(cardsToShow);
     } else {
@@ -73,7 +71,7 @@ export default function CardsGrid({
   };
 
   useEffect(() => {
-    filterProducts(activeTag); // Run on initial render and activeTag change
+    filterProducts(activeTag);
   }, [activeTag]);
 
   return (
