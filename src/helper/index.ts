@@ -75,7 +75,7 @@ export const getProductRes = async () => {
 
   const result = await query.includeCount().toJSON().find();
   return {
-    productData: result,
+    productData: result[0],
   };
 };
 
