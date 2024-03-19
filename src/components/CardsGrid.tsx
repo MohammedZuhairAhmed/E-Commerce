@@ -13,21 +13,21 @@ export default async function CardsGrid({
 }: CardsGridProps) {
   const products = params;
   let tags;
-  if (override) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`,
-      {
-        method: 'POST',
-        body: JSON.stringify(products),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
-      },
-    );
-    const data = (await res.json()) as ProductResProps;
-    tags = data.productTags;
-  }
+  // if (override) {
+  //   const res = await fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`,
+  //     {
+  //       method: 'POST',
+  //       body: JSON.stringify(products),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       cache: 'no-store',
+  //     },
+  //   );
+  //   const data = (await res.json()) as ProductResProps;
+  //   tags = data.productTags;
+  // }
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
@@ -49,17 +49,17 @@ export default async function CardsGrid({
     });
   };
 
-  const filterButtons = tags?.map((tag) => {
-    return (
-      <button
-        key={tag}
-        className={`btn ${styles.filterButton} ${tag === activeTag ? 'btn-primary' : 'btn-outline-primary'}`}
-        onClick={() => handleTagClick(tag)}
-      >
-        {tag}
-      </button>
-    );
-  });
+  // const filterButtons = tags?.map((tag) => {
+  //   return (
+  //     <button
+  //       key={tag}
+  //       className={`btn ${styles.filterButton} ${tag === activeTag ? 'btn-primary' : 'btn-outline-primary'}`}
+  //       onClick={() => handleTagClick(tag)}
+  //     >
+  //       {tag}
+  //     </button>
+  //   );
+  // });
 
   const filterProducts = async (activeTag: string) => {
     if (activeTag === 'all') {
@@ -101,7 +101,7 @@ export default async function CardsGrid({
           >
             All
           </button>
-          {filterButtons}
+          {/* {filterButtons} */}
         </div>
       ) : (
         <div className={styles.Heading}>
