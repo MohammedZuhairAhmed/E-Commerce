@@ -16,7 +16,7 @@ export default async function Products() {
     <main>
       {dataLoaded && data?.productData && (
         <CardsGrid
-          params={data}
+          params={data.productData}
           title="Products"
           override
           redirectionLink="product"

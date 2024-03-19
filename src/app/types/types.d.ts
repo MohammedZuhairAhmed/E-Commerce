@@ -6,11 +6,11 @@ type HeaderProps = {
 
 type HomeProps = {
   banners: Image[];
-  products: ProductResProps;
+  products: ProductProps[];
 };
 
 type ProductResProps = {
-  productTags?: Array<string>;
+  productTags: Array<string>;
   productData: ProductProps[];
 };
 
@@ -40,7 +40,7 @@ type ProductProps = {
 };
 
 type CardsGridProps = {
-  params: ProductResProps;
+  params: ProductProps[];
   title: string;
   viewAllText?: string;
   redirectionLink: string;

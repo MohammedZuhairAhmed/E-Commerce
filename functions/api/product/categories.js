@@ -8,7 +8,6 @@ export default async function handler(req, res) {
 
     const response = {
       productTags,
-      productData,
     };
 
     res.status(200).json(response);

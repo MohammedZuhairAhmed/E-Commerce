@@ -4,15 +4,30 @@ import { useState, useEffect } from 'react';
 import Card from './Card';
 import styles from './CardsGrid.module.css';
 
-export default function CardsGrid({
+export default async function CardsGrid({
   params,
   title,
   viewAllText,
   override,
   redirectionLink,
 }: CardsGridProps) {
-  const products = params.productData;
-  const tags = params.productTags;
+  const products = params;
+  let tags;
+  if (override) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`,
+      {
+        method: 'POST',
+        body: JSON.stringify(products),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        cache: 'no-store',
+      },
+    );
+    const data = (await res.json()) as ProductResProps;
+    tags = data.productTags;
+  }
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
