@@ -66,16 +66,36 @@ export const getHomeRes = async (entryUrl: string) => {
 
   return {
     banners,
-    products,
+    products: {
+      productData: products,
+    },
   };
 };
 
 export const getProductRes = async () => {
+  const query1 = allEntriesQuery('products');
+  const query2 = allEntriesQuery('categories');
+
+  const res1 = await query1.includeCount().toJSON().find();
+  const res2 = await query2.toJSON().find();
+  const categories = res2[0][0].categories;
+
+  return {
+    categories,
+    productData: res1[0],
+  };
+};
+
+export const getProductByCategory = async (category: string) => {
   const query = allEntriesQuery('products');
 
-  const result = await query.includeCount().toJSON().find();
+  const res = await query
+    .includeCount()
+    .toJSON()
+    .where('category', category)
+    .find();
   return {
-    productData: result[0],
+    products: res[0],
   };
 };
 

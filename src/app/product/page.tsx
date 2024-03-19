@@ -1,4 +1,4 @@
-import { getHomeRes, getProductRes } from '@/helper';
+import { getProductRes } from '@/helper';
 import CardsGrid from '@/components/CardsGrid';
 
 export default async function Products() {
@@ -16,7 +16,7 @@ export default async function Products() {
     <main>
       {dataLoaded && data?.productData && (
         <CardsGrid
-          params={data.productData}
+          params={data}
           title="Products"
           override
           redirectionLink="product"

@@ -1,49 +1,23 @@
 'use client';
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { getProductByCategory } from '@/helper';
 import Card from './Card';
 import styles from './CardsGrid.module.css';
 
-export default async function CardsGrid({
+export default function CardsGrid({
   params,
   title,
   viewAllText,
   override,
   redirectionLink,
 }: CardsGridProps) {
-  const products = params;
-  let tags;
-  let filterButtons;
-  if (override) {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/categories`,
-      {
-        method: 'POST',
-        body: JSON.stringify(products),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
-      },
-    );
-    const data = (await res.json()) as ProductResProps;
-    tags = data.productTags;
+  const products = params.productData;
+  const tags = params.categories;
 
-    filterButtons = tags?.map((tag) => {
-      return (
-        <button
-          key={tag}
-          className={`btn ${styles.filterButton} ${tag === activeTag ? 'btn-primary' : 'btn-outline-primary'}`}
-          onClick={() => handleTagClick(tag)}
-        >
-          {tag}
-        </button>
-      );
-    });
-  }
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
-  const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
+  const [filteredProducts, setFilteredProducts] =
+    useState<ProductProps[]>(products);
 
   const handleClick = () => {
     setShowAll(!showAll);
@@ -62,33 +36,33 @@ export default async function CardsGrid({
     });
   };
 
-  const filterProducts = async (activeTag: string) => {
-    if (activeTag === 'all') {
-      setFilteredProducts(cardsToShow);
-    } else {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/product/${activeTag}`;
-      const res = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(products),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        cache: 'no-store',
-      });
+  const filterButtons = tags?.map((tag) => {
+    return (
+      <button
+        key={tag}
+        className={`btn ${styles.filterButton} ${tag === activeTag ? 'btn-primary' : 'btn-outline-primary'}`}
+        onClick={() => handleTagClick(tag)}
+      >
+        {tag}
+      </button>
+    );
+  });
 
-      const data = await res.json();
-
-      const filteredProductIndexes = data.productIndexes;
-      const filteredProducts = cardsToShow.filter((product, index) =>
-        filteredProductIndexes.includes(index),
-      );
-      setFilteredProducts(filteredProducts);
-    }
-  };
+  const filterProducts = useCallback(
+    async (activeTag: string) => {
+      if (activeTag === 'all') {
+        setFilteredProducts(products);
+      } else {
+        const data = await getProductByCategory(activeTag);
+        setFilteredProducts(data.products);
+      }
+    },
+    [products],
+  );
 
   useEffect(() => {
     filterProducts(activeTag);
-  }, [activeTag]);
+  }, [activeTag, filterProducts]);
 
   return (
     <div id="cards">
@@ -101,7 +75,7 @@ export default async function CardsGrid({
           >
             All
           </button>
-          {tags && filterButtons}
+          {filterButtons}
         </div>
       ) : (
         <div className={styles.Heading}>
@@ -109,9 +83,13 @@ export default async function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {filteredProducts.map((card: ProductProps, index: number) => (
-          <Card key={index} {...card} redirectionLink={redirectionLink} />
-        ))}
+        {override
+          ? filteredProducts.map((card: ProductProps, index: number) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))
+          : cardsToShow.map((card: any, index: any) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))}
       </div>
       <div
         onClick={handleClick}
