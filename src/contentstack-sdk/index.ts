@@ -1,6 +1,4 @@
 import * as Utils from '@contentstack/utils';
-import ContentstackLivePreview from '@contentstack/live-preview-utils';
-import getConfig from 'next/config';
 import {
   customHostUrl,
   initializeContentStackSdk,
@@ -20,15 +18,7 @@ type GetEntryByUrl = {
   jsonRtePath: string[] | undefined;
 };
 
-const CONTENTSTACK_API_KEY = process.env.NEXT_PUBLIC_CONTENTSTACK_API_KEY;
-
-const CONTENTSTACK_ENVIRONMENT =
-  process.env.NEXT_PUBLIC_CONTENTSTACK_ENVIRONMENT;
-
 const CONTENTSTACK_API_HOST = process.env.NEXT_PUBLIC_CONTENTSTACK_API_HOST;
-const CONTENTSTACK_APP_HOST = process.env.NEXT_PUBLIC_CONTENTSTACK_APP_HOST;
-const CONTENTSTACK_LIVE_PREVIEW =
-  process.env.NEXT_PUBLIC_CONTENTSTACK_LIVE_PREVIEW;
 
 let customHostBaseUrl = CONTENTSTACK_API_HOST as string;
 customHostBaseUrl = customHostUrl(customHostBaseUrl);
@@ -40,23 +30,6 @@ const Stack = initializeContentStackSdk();
 if (isValidCustomHostUrl(customHostBaseUrl)) {
   Stack.setHost(customHostBaseUrl);
 }
-
-// Setting LP if enabled
-ContentstackLivePreview.init({
-  //@ts-ignore
-  stackSdk: Stack,
-  clientUrlParams: {
-    host: CONTENTSTACK_APP_HOST,
-  },
-  stackDetails: {
-    apiKey: CONTENTSTACK_API_KEY,
-    environment: CONTENTSTACK_ENVIRONMENT,
-  },
-  enable: CONTENTSTACK_LIVE_PREVIEW === 'true',
-  ssr: false,
-})?.catch((err) => console.error(err));
-
-export const { onEntryChange } = ContentstackLivePreview;
 
 const renderOption = {
   span: (node: any, next: any) => next(node.children),
