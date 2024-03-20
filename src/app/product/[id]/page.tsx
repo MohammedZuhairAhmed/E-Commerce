@@ -1,4 +1,5 @@
 import { getProductByID } from '@/helper';
+import Product from '@/components/Product';
 
 type Props = {
   params: {
@@ -7,14 +8,13 @@ type Props = {
 };
 
 export default async function productPage({ params }: Props) {
+  let dataLoaded = false;
+  let data;
   try {
-    const res = getProductByID(params.id);
+    data = (await getProductByID(params.id)) as Product;
+    dataLoaded = true;
   } catch (err) {
     console.error(err);
   }
-  return (
-    <>
-      <div className="pt-7">hi</div>
-    </>
-  );
+  return <main>{dataLoaded && data && <Product params={data} />}</main>;
 }

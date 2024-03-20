@@ -11,7 +11,7 @@ export default function Card({
   rating,
   price,
   image,
-  tags,
+  category,
   redirectionLink,
 }: CardProps) {
   return (
@@ -22,9 +22,9 @@ export default function Card({
       <div className={`card-with-image border-accent ${styles.cardWidth}`}>
         <div className="card cs-resource h-100">
           <div className="card-wrap">
-            {tags && tags.length > 0 && (
+            {category && category.length > 0 && (
               <div className="card-tag">
-                <p className="card-text body-4 p-2">{tags}</p>
+                <p className="card-text body-4 p-2">{category}</p>
               </div>
             )}
             {typeof image === 'object' && image.url && (

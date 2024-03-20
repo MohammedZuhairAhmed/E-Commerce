@@ -1,0 +1,57 @@
+.purple {
+  color: #7c4dff;
+  cursor: pointer;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  gap: 120px;
+  padding-left: 60px;
+  margin-top: 100px;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+}
+
+.iconsRow {
+  display: flex;
+  flex-direction: row;
+  /* gap: 120px; */
+  margin-right: 27%;
+  justify-content: center;
+}
+
+.largeDevice {
+  display: flex;
+  flex-direction: row;
+}
+
+.smallDevice {
+  display: none;
+}
+
+@media only screen and (max-width: 1001px) {
+  .largeDevice {
+    display: none;
+  }
+
+  .smallDevice {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .iconsRow {
+    margin-right: 0%;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .smallDevice {
+    display: none;
+  }
+}

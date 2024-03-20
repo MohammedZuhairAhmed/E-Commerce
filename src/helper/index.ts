@@ -104,5 +104,7 @@ export const getProductByID = async (uid: string) => {
 
   const result = (await query.toJSON().fetch()) as ProductProps;
 
-  return result;
+  return {
+    product: result,
+  };
 };

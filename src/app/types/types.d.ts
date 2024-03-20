@@ -14,6 +14,10 @@ type ProductResProps = {
   productData: ProductProps[];
 };
 
+type Product = {
+  product: ProductProps;
+};
+
 type Button = {
   title: string;
   href: string;
@@ -36,7 +40,7 @@ type ProductProps = {
   rating: number;
   price: number;
   image: Image;
-  tags: string;
+  category: string;
 };
 
 type CardsGridProps = {
@@ -54,7 +58,7 @@ type CardProps = {
   rating: ProductProps['rating'] | string;
   price: ProductProps['price'] | string;
   image: ProductProps['image'] | string;
-  tags: ProductProps['tags'] | string;
+  category: ProductProps['category'] | string;
   redirectionLink: string;
 };
 
