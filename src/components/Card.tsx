@@ -16,7 +16,7 @@ export default function Card({
 }: CardProps) {
   return (
     <Link
-      href={`/${redirectionLink}/${title}`}
+      href={`/${redirectionLink}/${uid}`}
       style={{ textDecoration: 'none' }}
     >
       <div className={`card-with-image border-accent ${styles.cardWidth}`}>
@@ -29,13 +29,7 @@ export default function Card({
             )}
             {typeof image === 'object' && image.url && (
               <div className="card-img-top" style={{ textAlign: 'center' }}>
-                <Image
-                  src={image.url}
-                  alt="img"
-                  width={300}
-                  height={300}
-                  layout="responsive"
-                />
+                <Image src={image.url} alt="img" width={300} height={300} />
               </div>
             )}
           </div>

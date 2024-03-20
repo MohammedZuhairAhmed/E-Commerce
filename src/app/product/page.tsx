@@ -1,12 +1,12 @@
-import { getHomeRes } from '@/helper';
+import { getProductRes } from '@/helper';
 import CardsGrid from '@/components/CardsGrid';
 
 export default async function Products() {
-  let homeData;
   let dataLoaded = false;
+  let data;
 
   try {
-    homeData = (await getHomeRes('/')) as HomeProps;
+    data = (await getProductRes()) as ProductResProps;
     dataLoaded = true;
   } catch (err) {
     console.error(err);
@@ -14,9 +14,9 @@ export default async function Products() {
 
   return (
     <main>
-      {dataLoaded && homeData?.products && (
+      {dataLoaded && data?.productData && (
         <CardsGrid
-          params={homeData.products}
+          params={data}
           title="Products"
           override
           redirectionLink="product"

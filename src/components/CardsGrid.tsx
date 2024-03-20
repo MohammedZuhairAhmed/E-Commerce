@@ -1,6 +1,6 @@
 'use client';
-
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { getProductByCategory } from '@/helper';
 import Card from './Card';
 import styles from './CardsGrid.module.css';
 
@@ -11,36 +11,32 @@ export default function CardsGrid({
   override,
   redirectionLink,
 }: CardsGridProps) {
+  const products = params.productData;
+  const tags = params.categories;
+
   const [showAll, setShowAll] = useState(override || false);
   const [activeTag, setActiveTag] = useState('all');
+  const [filteredProducts, setFilteredProducts] =
+    useState<ProductProps[]>(products);
 
   const handleClick = () => {
     setShowAll(!showAll);
   };
 
-  const cardsToShow = showAll ? params : params.slice(0, 3);
-  const showViewAll = params.length > 3;
-
-  const filterMap = new Map<string, ProductProps[]>();
-
-  cardsToShow.forEach((product) => {
-    const tag = product.tags[0];
-    const products = filterMap.get(tag) || [];
-    products.push(product);
-    filterMap.set(tag, products);
-  });
-
-  const tags = Array.from(filterMap.keys());
+  const cardsToShow = showAll ? products : products.slice(0, 3);
+  const showViewAll = products.length > 3;
 
   const handleAllClick = () => {
     setActiveTag('all');
   };
 
   const handleTagClick = (tag: string) => {
-    setActiveTag(tag);
+    setActiveTag((currentTag) => {
+      return tag;
+    });
   };
 
-  const filterButtons = tags.map((tag) => {
+  const filterButtons = tags?.map((tag) => {
     return (
       <button
         key={tag}
@@ -52,9 +48,21 @@ export default function CardsGrid({
     );
   });
 
-  const filterProducts = (activeTag: string) => {
-    return filterMap.get(activeTag);
-  };
+  const filterProducts = useCallback(
+    async (activeTag: string) => {
+      if (activeTag === 'all') {
+        setFilteredProducts(products);
+      } else {
+        const data = await getProductByCategory(activeTag);
+        setFilteredProducts(data.products);
+      }
+    },
+    [products],
+  );
+
+  useEffect(() => {
+    filterProducts(activeTag);
+  }, [activeTag, filterProducts]);
 
   return (
     <div id="cards">
@@ -75,15 +83,13 @@ export default function CardsGrid({
         </div>
       )}
       <div className={styles.cardsGrid}>
-        {activeTag === 'all'
-          ? cardsToShow.map((card: any, index: any) => (
+        {override
+          ? filteredProducts.map((card: ProductProps, index: number) => (
               <Card key={index} {...card} redirectionLink={redirectionLink} />
             ))
-          : filterProducts(activeTag)?.map(
-              (card: ProductProps, index: number) => (
-                <Card key={index} {...card} redirectionLink={redirectionLink} />
-              ),
-            )}
+          : cardsToShow.map((card: any, index: any) => (
+              <Card key={index} {...card} redirectionLink={redirectionLink} />
+            ))}
       </div>
       <div
         onClick={handleClick}
