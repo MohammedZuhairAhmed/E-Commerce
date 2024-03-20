@@ -13,6 +13,7 @@ export default function Card({
   image,
   category,
   redirectionLink,
+  override,
 }: CardProps) {
   return (
     <Link
@@ -22,7 +23,7 @@ export default function Card({
       <div className={`card-with-image border-accent ${styles.cardWidth}`}>
         <div className="card cs-resource h-100">
           <div className="card-wrap">
-            {category && category.length > 0 && (
+            {!override && category && category.length > 0 && (
               <div className="card-tag">
                 <p className="card-text body-4 p-2">{category}</p>
               </div>
@@ -37,7 +38,9 @@ export default function Card({
             <h3 className={`body-5 fw-bold mb-4 ${styles.cardTitle}`}>
               {title}
             </h3>
-            <p className={`${styles.cardDescription}`}>{description}</p>
+            {!override && (
+              <p className={`${styles.cardDescription}`}>{description}</p>
+            )}
             <div className={`${styles.priceTag}`}>
               <p>$ {price}</p>
             </div>

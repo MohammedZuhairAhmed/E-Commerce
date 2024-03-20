@@ -60,6 +60,7 @@ type CardProps = {
   image: ProductProps['image'] | string;
   category: ProductProps['category'] | string;
   redirectionLink: string;
+  override?: boolean;
 };
 
 type List = {
